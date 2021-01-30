@@ -38,4 +38,4 @@ def getCategory(text):
     return res
 
 
-# print(getCategory(ARTICLE))
+print(getCategory(ARTICLE))
