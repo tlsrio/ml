@@ -1,6 +1,5 @@
-from transformers import pipeline, TFT5Model, TFT5ForConditionalGeneration
-import string
-import re
+from transformers import pipeline
+import json
 
 ARTICLE = "LONDON (Reuters) - Short-sellers are sitting on estimated losses of $70.87 billion from their short " \
           "positions in U.S. companies so far this year, data from financial data analytics firm Ortex showed on " \
@@ -14,33 +13,29 @@ ARTICLE = "LONDON (Reuters) - Short-sellers are sitting on estimated losses of $
           "figures are based on the change in trading prices between the start of January to Wednesday’s close, " \
           "and the number of short positions. The company sources short interest data from submissions by agent " \
           "lenders, prime brokers, and broker-dealers. "
-summarizer = pipeline("summarization")
 
-def _countwords(text):
-    num_words = sum([i.strip(string.punctuation).isalpha() for i in text.split()])
-    return num_words
+classifier = pipeline("zero-shot-classification")
 
-def _formattext(text):
-    # fix period spacing and adds capitalization after punctuation
-    text = text.replace(" .", ".")
-    punctuation_expression = re.compile('([.!?;]\s*)')
-    split_punctuation = punctuation_expression.split(text)
-    for i, j in enumerate(split_punctuation):
-        if len(j) > 1:
-            split_punctuation[i] = j[0].upper() + j[1:]
-    text = ''.join(split_punctuation)
-    return text
 
-def summarize(text):
+def getCategory(text):
+    #TODO: change categories
+    categories = [
+        "business",
+        "cars",
+        "entertainment",
+        "family",
+        "health",
+        "politics",
+        "religion",
+        "science",
+        "sports",
+        "technology",
+        "travel"
+    ]
+    res = classifier(text, categories, multi_class=True)
+    res = {res['labels'][i]: res['scores'][i] for i in range(len(res['labels']))}
+    res = json.dumps(res)
+    return res
 
-    summary = summarizer(text, max_length=200, min_length=20)[0]['summary_text']
-    summary = _formattext(summary)
 
-    text_length = _countwords(text);
-    summary_length = _countwords(summary);
-
-    reduced_by = "Original text reduced by " + str(summary_length/text_length) + ". "
-
-    return summary
-
-# print(summarize(ARTICLE))
+# print(getCategory(ARTICLE))
