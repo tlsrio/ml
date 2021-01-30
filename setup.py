@@ -1,9 +1,6 @@
 from setuptools import setup, find_packages
 
-requires = [
-    'flask',
-    'psycopg2',
-]
+requires = []
 
 setup(
     name='NLP API',
