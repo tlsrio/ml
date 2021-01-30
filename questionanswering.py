@@ -1,6 +1,6 @@
 from transformers import pipeline
 
-def pipelineQA(question, context):
+def getAnswer(question, context):
     nlp = pipeline("question-answering")
 
     result = nlp(question=question, context=context)
