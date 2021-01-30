@@ -1,6 +1,4 @@
 from transformers import pipeline
-import string
-import re
 import json
 
 ARTICLE = "LONDON (Reuters) - Short-sellers are sitting on estimated losses of $70.87 billion from their short " \
@@ -16,35 +14,28 @@ ARTICLE = "LONDON (Reuters) - Short-sellers are sitting on estimated losses of $
           "and the number of short positions. The company sources short interest data from submissions by agent " \
           "lenders, prime brokers, and broker-dealers. "
 
-summarizer = pipeline("summarization")
+classifier = pipeline("zero-shot-classification")
 
-def _countwords(text):
-    num_words = sum([i.strip(string.punctuation).isalpha() for i in text.split()])
-    return num_words
 
-def _formattext(text):
-    # fix period spacing and adds capitalization after punctuation
-    text = text.replace(" .", ".")
-    punctuation_expression = re.compile('([.!?;]\s*)')
-    split_punctuation = punctuation_expression.split(text)
-    for i, j in enumerate(split_punctuation):
-        if len(j) > 1:
-            split_punctuation[i] = j[0].upper() + j[1:]
-    text = ''.join(split_punctuation)
-    return text
+def getCategory(text):
+    #TODO: change categories
+    categories = [
+        "business",
+        "cars",
+        "entertainment",
+        "family",
+        "health",
+        "politics",
+        "religion",
+        "science",
+        "sports",
+        "technology",
+        "travel"
+    ]
+    res = classifier(text, categories, multi_class=True)
+    res = {res['labels'][i]: res['scores'][i] for i in range(len(res['labels']))}
+    res = json.dumps(res)
+    return res
 
-def getSummary(text):
 
-    summary = summarizer(text, max_length=200, min_length=20)[0]['summary_text']
-    summary = _formattext(summary)
-
-    text_length = _countwords(text);
-    summary_length = _countwords(summary);
-
-    # maybe leave this as a percentage
-    reduced_by = "Original text reduced by " + str(round((text_length - summary_length) / text_length * 100)) + "%. "
-    # reduced_by = round((text_length - summary_length) / text_length * 100);
-
-    return json.dumps({'summary': summary, 'reducedBy': reduced_by});
-
-print(getSummary(ARTICLE))
+# print(getCategory(ARTICLE))
