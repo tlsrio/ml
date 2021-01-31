@@ -5,5 +5,4 @@ COPY requirements.txt /
 RUN pip install -r /requirements.txt
 ADD ./app /app
 WORKDIR /app
-ENTRYPOINT [ "python" ]
-CMD ["-m flask run"]
+ENTRYPOINT [ "python", "app.py" ]
