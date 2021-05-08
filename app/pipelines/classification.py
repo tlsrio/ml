@@ -21,7 +21,7 @@ def getCategory(text):
     #TODO: change categories
     categories = [
         "business",
-        "cars",
+        "finance",
         "entertainment",
         "family",
         "health",
