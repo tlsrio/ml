@@ -1,8 +1,9 @@
 from transformers import pipeline
+import json
 
 def getSentiment(text):
     nlp = pipeline("sentiment-analysis")
 
-    result = nlp(text)[0]
+    result = nlp(text.strip('"'))[0]
 
-    return result
+    return json.dumps({'label': result['label'], 'score': round(result['score'], 4)})

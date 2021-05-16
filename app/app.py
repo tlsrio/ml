@@ -1,9 +1,10 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, json
 from pipelines.summarization import getSummary
 from pipelines.questionanswering import getAnswer
 from pipelines.sentiment import getSentiment
 from pipelines.ner import getNER
 from pipelines.classification import getCategory
+from pipelines.fetchArticles import fetchArticles, getContent, htmlToText
 
 app = Flask(__name__)
 
@@ -40,6 +41,19 @@ def classification():
     content = request.get_json()
     result = getCategory(content['text'])
     return result
+
+@app.route('/api/fetchArticles', methods=['POST'])
+def articles():
+    content = request.get_json()
+    result = fetchArticles(content)
+    return result
+
+@app.route('/api/urlToText', methods=['POST'])
+def getUrlText():
+    content = request.get_json()
+    html = getContent(content['link'])
+    text = htmlToText(html)
+    return json.dumps({'text': text})
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

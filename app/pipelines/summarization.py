@@ -35,14 +35,14 @@ def _formattext(text):
 
 def getSummary(text):
 
-    summary = summarizer(text, max_length=200, min_length=20)[0]['summary_text']
+    summary = summarizer(text, max_length=5000, min_length=20)[0]['summary_text']
     summary = _formattext(summary)
 
     text_length = _countwords(text);
     summary_length = _countwords(summary);
 
     # maybe leave this as a percentage
-    reduced_by = "Original text reduced by " + str(round((text_length - summary_length) / text_length * 100)) + "%. "
+    reduced_by = (round((text_length - summary_length) / text_length * 100))
     # reduced_by = round((text_length - summary_length) / text_length * 100);
 
     return json.dumps({'summary': summary, 'reducedBy': reduced_by});
