@@ -5,7 +5,8 @@
   </a>
   
   <h2 align="center">tslr.io - NLP api</h2>
-
+  <h4 align="center">NLP text summarization, analysis, and classification pipelines built using TensorFlow and Transformers with a Flask api</h4>
+  <br/>
   <p align="center">
   </p>
 </p>
