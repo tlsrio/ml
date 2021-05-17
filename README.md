@@ -94,7 +94,7 @@ Python 3.7.3
    ```sh
    ./start.sh
    ```
-The api runs at localhost:5050/.
+The api runs at localhost:5000/.
 
 
 
