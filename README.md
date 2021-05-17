@@ -50,6 +50,12 @@
 
 
 
+<!-- ROADMAP -->
+## Roadmap
+
+
+
+
 ### Built With
 
 * [Python](https://www.python.org/downloads/)
@@ -98,12 +104,6 @@ The api runs at localhost:5000/.
 
 
 
-<!-- ROADMAP -->
-## Roadmap
-
-
-
-
 <!-- CONTRIBUTING -->
 ## Contributing
 
@@ -123,7 +123,6 @@ The api runs at localhost:5000/.
 <!-- CONTACT -->
 ## Contact
 
-Zayaan Moez - [@zayaanmoez](https://github.com/zayaanmoez)
-Malcolm Yeh - [@malcolmyeh](https://github.com/malcolmyeh)
+Malcolm Yeh - [@malcolmyeh](https://github.com/malcolmyeh) | Zayaan Moez - [@zayaanmoez](https://github.com/zayaanmoez)
 
 Project Link: [https://github.com/tlsrio/ml](https://github.com/tlsrio/ml)
