@@ -15,9 +15,8 @@ def getAnswer(question, context):
 
     result = nlp(question=question, context=context)
 
-    result['score'] = round(result['score'], 5)
+    result["score"] = round(result["score"], 5)
 
-    return json.dumps({'question': question, 'answer': result['answer'], 'score': result['score']})
-
-
-
+    return json.dumps(
+        {"question": question, "answer": result["answer"], "score": result["score"]}
+    )

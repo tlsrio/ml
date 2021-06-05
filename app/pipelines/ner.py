@@ -39,4 +39,3 @@ def getNER(sequence):
     # res = {res['labels'][i]: res['scores'][i] for i in range(len(res['labels']))}
     # res = json.dumps(res)
     return result
-

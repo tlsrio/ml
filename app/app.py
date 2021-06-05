@@ -1,10 +1,7 @@
 from flask import Flask, request, json
-from pipelines.summarization import getSummary
-from pipelines.questionanswering import getAnswer
-from pipelines.sentiment import getSentiment
-from pipelines.ner import getNER
-from pipelines.classification import getCategory
-from pipelines.fetchArticles import fetchArticles, getContent, htmlToText
+import pipelines
+from scrapers.scrapeContent import getContent, htmlToText
+from scrapers.fetchArticles import fetchArticles
 
 app = Flask(__name__)
 
@@ -15,38 +12,35 @@ def connected():
 @app.route('/api/summarize', methods=['POST'])
 def summarize():
     content = request.get_json()
-    result = getSummary(content['text'])
+    result = pipelines.getSummary(content['text'])
     return result
 
 @app.route('/api/QA', methods=['POST'])
 def questions():
     content = request.get_json()
-    result = getAnswer(content['question'], content['text'])
+    result = pipelines.getAnswer(content['question'], content['text'])
     return result
 
 @app.route('/api/sentiment', methods=['POST'])
 def sentiment():
     content = request.get_json()
-    result = getSentiment(content['text'])
+    result = pipelines.getSentiment(content['text'])
     return result
 
 @app.route('/api/NER', methods=['POST'])
 def NER():
     content = request.get_json()
-    result = getNER(content['text'])
+    result = pipelines.getNER(content['text'])
     return result
 
 @app.route('/api/classification', methods=['POST'])
 def classification():
     content = request.get_json()
-    result = getCategory(content['text'])
+    result = pipelines.getCategory(content['text'])
     return result
 
-@app.route('/api/fetchArticles', methods=['POST'])
-def articles():
-    content = request.get_json()
-    result = fetchArticles(content)
-    return result
+####################################################
+# Scraping Routes
 
 @app.route('/api/urlToText', methods=['POST'])
 def getUrlText():
@@ -54,6 +48,13 @@ def getUrlText():
     html = getContent(content['link'])
     text = htmlToText(html)
     return json.dumps({'text': text})
+
+@app.route('/api/fetchArticles', methods=['POST'])
+def articles():
+    content = request.get_json()
+    result = fetchArticles(content)
+    return result
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
