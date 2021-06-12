@@ -20,15 +20,5 @@ def getThumbnail(html):
         meta = html.findAll(attrs={"property": "og:image"})
         thumbnail = meta[0].get("content")
     except Exception as e:
-        print(e)
+        return thumbnail
     return thumbnail
-
-
-def getLinks(html):
-    links = []
-    for link in html.find_all("a"):
-        href = link.get("href")
-        if href and href.find("http") != -1:
-            links.append(href)
-
-    return links
