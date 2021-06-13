@@ -70,7 +70,7 @@
 
 ### Prerequisites
 
-Python 3.7.3
+Python >= 3.5
 
 
 ### Installation
@@ -78,10 +78,27 @@ Python 3.7.3
 1. Clone the repo
    ```sh
    git clone https://github.com/tslr/ml
+   cd ml
    ```
-2. Install PIP packages
+2. Install Virtualenv
    ```sh
-   pip install
+   pip install virtualenv
+   ```
+3. Create virtualenv
+   ```sh
+   virtualenv venv --python=3.8
+   ```
+   or
+   ```sh
+   python3 -m virtualenv venv --python=3.8
+   ```  
+4. Activate Virtualenv
+   ```sh
+   source ./venv/bin/activate
+   ```
+5. Install all dependencies
+   ```sh
+   pip install -r requirements.txt
    ```
 
 
